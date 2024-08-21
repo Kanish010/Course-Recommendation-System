@@ -1,0 +1,126 @@
+.choose-campus {
+  display: flex;
+  height: 100vh;
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+}
+
+.settings-icon-container {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 10; /* Ensure the icon is above other elements */
+}
+
+.settings-icon {
+  cursor: pointer;
+  font-size: 2rem;
+  color: rgb(0, 0, 0); /* Changed to black */
+  transition: color 0.3s;
+}
+
+.settings-icon:hover {
+  color: #0056b3;
+}
+
+.campus {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  font-size: 2.5rem;
+  font-weight: bold;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+  color: white;
+  overflow: hidden;
+  transition: transform 0.3s ease;
+}
+
+.campus:hover {
+  transform: scale(1.05);
+}
+
+.okanagan {
+  background: url('Images/UBCO.jpeg') no-repeat center center;
+  background-size: cover;
+}
+
+.vancouver {
+  background: url('Images/UBCV.jpg') no-repeat center center;
+  background-size: cover;
+}
+
+.campus-text {
+  position: relative;
+  z-index: 1;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.campus-text::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background-color: rgba(12, 8, 8, 0.6);
+  transition: width 0.4s ease, height 0.4s ease, top 0.4s ease, left 0.4s ease;
+  z-index: -1;
+  transform: translate(-50%, -50%);
+}
+
+.campus-text:hover::before {
+  width: 100%;
+  height: 100%;
+  top: 50%;
+  left: 50%;
+}
+
+.campus-text:hover {
+  color: white;
+  transform: scale(1.1);
+}
+
+.prompt {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: rgba(255, 255, 255, 0.8);
+  padding: 1rem 2rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  z-index: 2;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .campus-selection-container .campus {
+    font-size: 1.8rem;
+  }
+
+  .campus-selection-container .settings-icon {
+    font-size: 1.5rem;
+  }
+
+  .campus-selection-container .prompt {
+    width: 90%;
+    padding: 0.8rem 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .campus-selection-container .campus {
+    font-size: 1.5rem;
+  }
+
+  .campus-selection-container .prompt {
+    width: 95%;
+    padding: 0.7rem 1.2rem;
+  }
+}

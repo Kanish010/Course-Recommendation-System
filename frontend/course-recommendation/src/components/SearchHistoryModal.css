@@ -1,0 +1,148 @@
+/* Modal container */
+.modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: linear-gradient(135deg, #ffffff 0%, #f3f4f6 100%);
+  padding: 30px 40px;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+  border-radius: 20px;
+  max-width: 700px;
+  width: 100%;
+  z-index: 1000;
+  overflow-y: auto;
+  max-height: 80vh; /* Allow scrolling for large content */
+  animation: fadeIn 0.5s ease-out;
+}
+
+/* Modal background overlay */
+.modal-background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  z-index: 999;
+  backdrop-filter: blur(5px);
+}
+
+/* Fade in animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -60%);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%);
+  }
+}
+
+/* Modal content */
+.modal-content {
+  text-align: center;
+}
+
+/* Modal header */
+.modal-content h2 {
+  font-size: 2rem;
+  margin-bottom: 20px;
+  font-weight: 700;
+  color: #007bff;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+  padding-bottom: 10px;
+  position: relative;
+}
+
+.modal-content h2::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  transform: translateX(-50%);
+  width: 80px;
+  height: 4px;
+  background-color: #007bff;
+  border-radius: 2px;
+}
+
+/* Search history list */
+.search-history-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+/* Search item */
+.search-item {
+  margin-bottom: 20px;
+  padding: 20px;
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.search-item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* Recommended courses */
+.recommended-courses ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+.recommended-courses li {
+  margin-bottom: 10px;
+  font-size: 1rem;
+  color: #333;
+}
+
+.recommended-courses li:before {
+  content: "•";
+  color: #007bff;
+  font-weight: bold;
+  display: inline-block;
+  width: 1em;
+  margin-left: -1em;
+}
+
+/* Buttons */
+.modal-actions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 25px;
+}
+
+.clear-history-button,
+.close-button {
+  padding: 12px 25px;
+  border: none;
+  border-radius: 8px;
+  background: linear-gradient(135deg, #007bff 0%, #0056b3 100%);
+  color: #fff;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.3s ease;
+}
+
+.clear-history-button:hover,
+.close-button:hover {
+  background: linear-gradient(135deg, #0056b3 0%, #003c82 100%);
+  transform: translateY(-2px);
+}
+
+.clear-history-button:active,
+.close-button:active {
+  transform: translateY(0);
+}
+
+.error-message {
+  color: #d9534f;
+  text-align: center;
+  font-size: 1rem;
+}

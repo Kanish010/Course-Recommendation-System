@@ -1,0 +1,220 @@
+.favorite-courses-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.favorite-courses-modal {
+  background: #ffffff;
+  padding: 2.5rem;
+  border-radius: 16px;
+  width: 100%;
+  max-width: 700px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+  position: relative;
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.favorite-courses-modal .close-button {
+  position: absolute;
+  top: -15px;
+  right: -15px;
+  background: #e74c3c;
+  border: none;
+  color: white;
+  font-size: 1.2rem;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1; 
+  padding: 0; /* Removes padding to ensure the button remains circular */
+}
+
+.favorite-courses-modal .close-button:hover {
+  background-color: #c0392b;
+  transform: scale(1.1);
+}
+
+.favorite-courses-modal h2 {
+  margin-top: 0;
+  text-align: center;
+  font-size: 2.4rem;
+  color: #2c3e50;
+  font-weight: bold;
+  margin-bottom: 1.5rem;
+}
+
+.favorite-courses-modal .search-bar-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 1.5rem;
+}
+
+.favorite-courses-modal input[type="text"] {
+  flex-grow: 1;
+  padding: 0.9rem;
+  font-size: 1rem;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.favorite-courses-modal input[type="text"]:focus {
+  border-color: #3498db;
+  box-shadow: 0 6px 16px rgba(52, 152, 219, 0.2);
+  outline: none;
+}
+
+.favorite-courses-modal .clear-search-button {
+  padding: 0.6rem 1.4rem;
+  font-size: 1rem;
+  font-weight: 600;
+  background-color: #3498db;
+  color: #ffffff;
+  border: none;
+  border-radius: 30px;
+  cursor: pointer;
+  box-shadow: 0 6px 12px rgba(52, 152, 219, 0.3);
+  transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+}
+
+.favorite-courses-modal .clear-search-button:hover {
+  background-color: #2980b9;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 16px rgba(52, 152, 219, 0.4);
+}
+
+.favorite-courses-modal .clear-search-button:active {
+  background-color: #1c6ea4;
+  transform: translateY(0);
+  box-shadow: 0 4px 8px rgba(52, 152, 219, 0.2);
+}
+
+.favorite-courses-modal .course-list {
+  max-height: 350px;
+  overflow-y: auto;
+  margin-top: 1rem;
+  padding-right: 10px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+  padding: 0.5rem;
+}
+
+.favorite-courses-modal .course-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem;
+  border-bottom: 1px solid #eee;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+  border-radius: 5px;
+}
+
+.favorite-courses-modal .course-item:hover {
+  background-color: #f5f5f5;
+  transform: scale(1.02);
+}
+
+.favorite-courses-modal .course-item span {
+  font-size: 1rem;
+  color: #34495e;
+  font-weight: 500;
+}
+
+.favorite-courses-modal .star-button {
+  font-size: 1.8rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #f1c40f;
+  transition: transform 0.2s ease, color 0.3s ease;
+}
+
+.favorite-courses-modal .star-button:hover {
+  transform: scale(1.2);
+}
+
+.favorite-courses-modal .star-button.filled {
+  color: #f1c40f;
+}
+
+.favorite-courses-modal .star-button.empty {
+  color: #ddd;
+}
+
+/* Responsive design */
+@media (max-width: 1024px) {
+  .favorite-courses-modal {
+    padding: 1.5rem;
+    width: 85%;
+    max-width: 500px;
+  }
+
+  .favorite-courses-modal h2 {
+    font-size: 1.8rem;
+  }
+
+  .favorite-courses-modal input[type="text"] {
+    font-size: 0.9rem;
+  }
+
+  .favorite-courses-modal .clear-search-button {
+    font-size: 0.9rem;
+    padding: 0.5rem 1.2rem;
+  }
+
+  .favorite-courses-modal .course-item span {
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .favorite-courses-modal {
+    padding: 1rem;
+    width: 95%;
+    max-width: 450px;
+  }
+
+  .favorite-courses-modal h2 {
+    font-size: 1.6rem;
+  }
+
+  .favorite-courses-modal input[type="text"] {
+    font-size: 0.85rem;
+  }
+
+  .favorite-courses-modal .clear-search-button {
+    font-size: 0.85rem;
+    padding: 0.5rem 1rem;
+  }
+
+  .favorite-courses-modal .course-item span {
+    font-size: 0.85rem;
+  }
+}
