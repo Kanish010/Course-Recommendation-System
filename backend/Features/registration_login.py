@@ -20,7 +20,7 @@ def handle_login(data):
     if user_id is None:
         db = create_connection()
         cursor = db.cursor()
-        cursor.execute("SELECT username FROM Users WHERE username = %s", (username,))
+        cursor.execute('SELECT username FROM "Users" WHERE username = %s', (username,))
         if cursor.fetchone():
             close_connection(db)
             return {'success': False, 'message': 'Password is incorrect. Please try again.'}

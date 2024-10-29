@@ -1,5 +1,5 @@
 import bcrypt
-from mysql.connector import Error
+from psycopg2 import Error
 from database import create_connection, close_connection
 from datetime import datetime
 
@@ -15,23 +15,21 @@ def register_user(username, email, password):
         cursor = connection.cursor()
         hashed_password = hash_password(password)
         try:
-            # Check if username already exists
-            cursor.execute("SELECT user_id FROM Users WHERE username = %s", (username,))
+            cursor.execute('SELECT user_id FROM "Users" WHERE username = %s', (username,))
             if cursor.fetchone():
                 print("Error: Username already exists. Please choose a different username.")
                 return None
             
-            # Check if email already exists
-            cursor.execute("SELECT user_id FROM Users WHERE email = %s", (email,))
+            cursor.execute('SELECT user_id FROM "Users" WHERE email = %s', (email,))
             if cursor.fetchone():
                 print("Error: Email already exists. Please choose a different email.")
                 return None
             
             cursor.execute(
-                "INSERT INTO Users (username, email, password_hash) VALUES (%s, %s, %s)",
+                'INSERT INTO "Users" (username, email, password_hash) VALUES (%s, %s, %s) RETURNING user_id',
                 (username, email, hashed_password)
             )
-            user_id = cursor.lastrowid
+            user_id = cursor.fetchone()[0]
             connection.commit()
             print("User registered successfully")
             return user_id
@@ -47,7 +45,7 @@ def authenticate_user(username, password):
     if connection:
         cursor = connection.cursor()
         try:
-            cursor.execute("SELECT user_id, password_hash FROM Users WHERE username = %s", (username,))
+            cursor.execute('SELECT user_id, password_hash FROM "Users" WHERE username = %s', (username,))
             record = cursor.fetchone()
             if not record:
                 print("Error: Username does not exist. Please check your username.")
@@ -56,14 +54,13 @@ def authenticate_user(username, password):
                 print("Error: Incorrect password. Please check your password.")
                 return None
             else:
-                # Update the last_login field to current timestamp
                 cursor.execute(
-                    "UPDATE Users SET last_login = %s WHERE user_id = %s",
+                    'UPDATE "Users" SET last_login = %s WHERE user_id = %s',
                     (datetime.now(), record[0])
                 )
                 connection.commit()
                 print("User authenticated successfully")
-                return record[0]  # Return the user_id
+                return record[0]
         except Error as e:
             print(f"Database Error: {e}")
             return None

@@ -26,12 +26,19 @@ def perform_search(user_id, campus, user_interest, levels):
 
     cursor = db.cursor()
     levels_str = ",".join(levels) if levels != ["All Levels"] else "All Levels"
+    
+    # Insert or update UserLastSearch record
     cursor.execute("""
-        INSERT INTO UserLastSearch (user_id, preferred_levels, interests, preferred_campus)
+        INSERT INTO "UserLastSearch" (user_id, preferred_levels, interests, preferred_campus)
         VALUES (%s, %s, %s, %s)
-        ON DUPLICATE KEY UPDATE preferred_levels=%s, interests=%s, preferred_campus=%s
-    """, (user_id, levels_str, user_interest, campus, levels_str, user_interest, campus))
+        ON CONFLICT (user_id) DO UPDATE
+        SET preferred_levels = EXCLUDED.preferred_levels,
+            interests = EXCLUDED.interests,
+            preferred_campus = EXCLUDED.preferred_campus
+    """, (user_id, levels_str, user_interest, campus))
     db.commit()
+    
+    # Get recommended courses
     recommended_courses = recommend_courses(cursor, campus, user_interest, levels)
     
     result_count = len(recommended_courses) if recommended_courses else 0
@@ -42,15 +49,17 @@ def perform_search(user_id, campus, user_interest, levels):
     else:
         print(f"\nNo {', '.join(levels)} level courses with interest '{user_interest}' were found.")
 
+    # Log the search in UserSearchHistory
     cursor.execute("""
-        INSERT INTO UserSearchHistory (user_id, search_query, result_count)
+        INSERT INTO "UserSearchHistory" (user_id, search_query, result_count)
         VALUES (%s, %s, %s)
     """, (user_id, f"Interest: {user_interest}, Levels: {levels_str}", result_count))
     db.commit()
 
+    # Insert the recommended courses into RecommendedCourses
     for course in recommended_courses:
         cursor.execute("""
-            INSERT INTO RecommendedCourses (user_id, course_title, course_id, campus)
+            INSERT INTO "RecommendedCourses" (user_id, course_title, course_id, campus)
             VALUES (%s, %s, %s, %s)
         """, (user_id, course[1], course[0], campus))
     db.commit()

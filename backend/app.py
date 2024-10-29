@@ -26,8 +26,6 @@ def chatbot():
     if not user_input:
         return jsonify({"success": False, "message": "No input provided"}), 400
 
-    chat_history = []  # Initialize chat history (or retrieve from session if necessary)
-    
     response = chat_with_gpt(user_input, chat_history, campus, user_id, search_id)
     return jsonify({"success": True, "response": response})
 
@@ -61,13 +59,9 @@ def search():
 @app.route('/api/search-history', methods=['GET'])
 def search_history():
     user_id = request.args.get('user_id')
-    print(f"Received request for search history with user_id: {user_id}")
-    
     history = get_search_history(user_id)
-    print(f"Search history returned: {history}")
 
     if isinstance(history, dict) and "error" in history:
-        print(f"Error in search history retrieval: {history['error']}")
         return jsonify({"success": False, "message": history["error"]})
 
     return jsonify({"success": True, "history": history})
@@ -119,7 +113,6 @@ def view_ratings_endpoint(user_id):
 
 @app.route('/api/favorite_courses/<int:user_id>', methods=['GET'])
 def get_favorite_courses_endpoint(user_id):
-    """Endpoint to get all favorite courses for a user."""
     try:
         favorites = get_favorite_courses(user_id)
         if favorites:
@@ -131,7 +124,6 @@ def get_favorite_courses_endpoint(user_id):
 
 @app.route('/api/favorite_courses', methods=['POST'])
 def add_to_favorite_courses_endpoint():
-    """Endpoint to add a course to favorites."""
     try:
         data = request.json
         user_id = data.get('user_id')
@@ -143,7 +135,6 @@ def add_to_favorite_courses_endpoint():
 
 @app.route('/api/favorite_courses', methods=['DELETE'])
 def remove_from_favorite_courses_endpoint():
-    """Endpoint to remove a course from favorites."""
     try:
         data = request.json
         user_id = data.get('user_id')
@@ -155,7 +146,6 @@ def remove_from_favorite_courses_endpoint():
 
 @app.route('/api/courses', methods=['GET'])
 def get_courses_endpoint():
-    """Endpoint to get courses based on a search query."""
     search_query = request.args.get('query', '')
     try:
         courses = get_courses(search_query)

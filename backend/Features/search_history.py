@@ -8,20 +8,13 @@ def get_search_history(user_id):
     cursor = db.cursor()
     cursor.execute("""
         SELECT course_title, course_id, campus
-        FROM RecommendedCourses
+        FROM "RecommendedCourses"
         WHERE user_id = %s
         ORDER BY search_id DESC
     """, (user_id,))
     recommended_courses = cursor.fetchall()
 
-    history = []
-    for course in recommended_courses:
-        history.append({
-            "course_title": course[0],
-            "course_id": course[1],
-            "campus": course[2]
-        })
-
+    history = [{"course_title": course[0], "course_id": course[1], "campus": course[2]} for course in recommended_courses]
     close_connection(db)
     return history
 
@@ -30,10 +23,10 @@ def clear_search_history(user_id):
     cursor = db.cursor()
 
     cursor.execute("""
-        DELETE FROM RecommendedCourses WHERE user_id = %s
+        DELETE FROM "RecommendedCourses" WHERE user_id = %s
     """, (user_id,))
     cursor.execute("""
-        DELETE FROM UserSearchHistory WHERE user_id = %s
+        DELETE FROM "UserSearchHistory" WHERE user_id = %s
     """, (user_id,))
     db.commit()
     close_connection(db)
